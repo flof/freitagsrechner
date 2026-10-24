@@ -346,7 +346,7 @@ export default function App() {
         </div>
 
         <footer className="mt-4 flex flex-col gap-1.5 border-t border-slate-200 pt-3 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:text-slate-400">
-          <p>Alles bleibt in deinem Browser gespeichert – kein Konto, kein Server.</p>
+          <p>Alles bleibt in deinem Browser gespeichert – kein Konto, kein Server. Quellcode auf <a href="https://github.com/flof/freitagsrechner">GitHub</a>.</p>
           <button
             type="button"
             onClick={handleReset}
