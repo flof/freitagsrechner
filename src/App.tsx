@@ -78,8 +78,7 @@ function ResultCard({ view }: { view: ResultView }) {
     )
   }
 
-  const { departure, targetMinutes, fridayStartMinutes, fridayBreakMinutes } = view
-  const progress = Math.min(100, Math.round((departure.workedMinutes / targetMinutes) * 100))
+  const { departure } = view
 
   return (
     <section className={`${cardClass} lg:sticky lg:top-10`} aria-live="polite">
@@ -90,13 +89,16 @@ function ResultCard({ view }: { view: ResultView }) {
           <p className="mt-4 text-5xl font-semibold tracking-tight text-emerald-600 dark:text-emerald-400">
             Feierabend 🎉
           </p>
-          <p className="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-200">
-            Deine Woche ist voll: {formatDurationLong(departure.workedMinutes)} von{' '}
-            {formatDurationLong(targetMinutes)}.
-            {departure.overtimeMinutes > 0 && (
-              <> Das sind {formatDurationLong(departure.overtimeMinutes)} Überstunden.</>
-            )}
-          </p>
+          <div className="mt-4 space-y-1 text-sm text-slate-700 dark:text-slate-200">
+            <p>
+              Gearbeitet von MO-DO: {formatDurationLong(departure.workedMinutes)}
+            </p>
+            <p>
+              {departure.overtimeMinutes > 0
+                ? `Überstunden: ${formatDurationLong(departure.overtimeMinutes)}`
+                : 'Wochenziel erfüllt.'}
+            </p>
+          </div>
         </>
       ) : (
         <>
@@ -111,35 +113,14 @@ function ResultCard({ view }: { view: ResultView }) {
               Das ist erst am Samstag – vielleicht lieber früher anfangen.
             </p>
           )}
-          <p className="mt-4 text-base leading-relaxed text-slate-700 dark:text-slate-200">
-            Noch {formatDurationLong(departure.remainingMinutes)} Arbeit
-            {fridayBreakMinutes > 0 && <> plus {formatDurationLong(fridayBreakMinutes)} Pause</>}{' '}
-            ab {formatTime(fridayStartMinutes)} Uhr.
-          </p>
+          <div className="mt-4 space-y-1 text-sm text-slate-700 dark:text-slate-200">
+            <p>
+              Gearbeitet von MO-DO: {formatDurationLong(departure.workedMinutes)}
+            </p>
+            <p>Es fehlen noch: {formatDurationLong(departure.remainingMinutes)}</p>
+          </div>
         </>
       )}
-
-      <div className="mt-6">
-        <div className="flex items-baseline justify-between gap-3 text-sm">
-          <span className="text-slate-500 dark:text-slate-400">Bisher geschafft</span>
-          <span className="font-medium tabular-nums">
-            {formatDurationLong(departure.workedMinutes)} / {formatDurationLong(targetMinutes)}
-          </span>
-        </div>
-        <div
-          role="progressbar"
-          aria-label="Wochenfortschritt"
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={progress}
-          className="mt-2 h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800"
-        >
-          <div
-            className="h-full rounded-full bg-emerald-500 transition-[width] duration-300"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      </div>
     </section>
   )
 }
