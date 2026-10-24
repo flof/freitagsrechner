@@ -91,11 +91,11 @@ function ResultCard({ view }: { view: ResultView }) {
           </p>
           <div className="mt-4 space-y-1 text-sm text-slate-700 dark:text-slate-200">
             <p>
-              Gearbeitet von MO-DO: {formatDurationLong(departure.workedMinutes)}
+              Gearbeitet von MO-DO: {formatTime(departure.workedMinutes)}
             </p>
             <p>
               {departure.overtimeMinutes > 0
-                ? `Überstunden: ${formatDurationLong(departure.overtimeMinutes)}`
+                ? `Überstunden: ${formatTime(departure.overtimeMinutes)}`
                 : 'Wochenziel erfüllt.'}
             </p>
           </div>
@@ -115,9 +115,9 @@ function ResultCard({ view }: { view: ResultView }) {
           )}
           <div className="mt-4 space-y-1 text-sm text-slate-700 dark:text-slate-200">
             <p>
-              Gearbeitet von MO-DO: {formatDurationLong(departure.workedMinutes)}
+              Gearbeitet von MO-DO: {formatTime(departure.workedMinutes)}
             </p>
-            <p>Es fehlen noch: {formatDurationLong(departure.remainingMinutes)}</p>
+            <p>Es fehlen noch: {formatTime(departure.remainingMinutes)}</p>
           </div>
         </>
       )}
