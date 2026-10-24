@@ -20,10 +20,10 @@ import {
 const DAY_LABELS = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag'] as const
 
 const cardClass =
-  'rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur sm:p-5 dark:border-slate-800 dark:bg-slate-900/80'
+  'rounded-xl border border-slate-200 bg-white/90 p-3 shadow-sm backdrop-blur sm:p-4 dark:border-slate-800 dark:bg-slate-900/80'
 
 const inputBase =
-  'h-9 rounded-lg border bg-white px-2.5 text-base tabular-nums text-slate-900 shadow-inner outline-none transition focus:ring-2 dark:bg-slate-950 dark:text-slate-50 [color-scheme:light] dark:[color-scheme:dark]'
+  'h-8 rounded-lg border bg-white px-2 text-sm tabular-nums text-slate-900 shadow-inner outline-none transition focus:ring-2 dark:bg-slate-950 dark:text-slate-50 [color-scheme:light] dark:[color-scheme:dark]'
 
 function borderClass(valid: boolean): string {
   return valid
@@ -196,21 +196,21 @@ export default function App() {
         className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-72 bg-gradient-to-b from-emerald-100/80 to-transparent dark:from-emerald-950/50"
       />
 
-      <div className="mx-auto w-full max-w-4xl px-3 py-6 sm:px-4 lg:py-10">
-        <header className="mb-5 lg:mb-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">
+      <div className="mx-auto w-full max-w-3xl px-2 py-4 sm:px-3 lg:py-6">
+        <header className="mb-3 lg:mb-5">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">
             Freitagsrechner
           </p>
-          <h1 className="mt-1.5 text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
+          <h1 className="mt-1 text-xl font-semibold tracking-tight sm:text-2xl lg:text-3xl">
             Wann kannst du ins Wochenende?
           </h1>
-          <p className="mt-1 max-w-xl text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+          <p className="mt-0.5 max-w-xl text-xs text-slate-600 dark:text-slate-400">
             Trag deine Zeiten von Montag bis Donnerstag ein und wann du heute angefangen hast.
           </p>
         </header>
 
-        <div className="grid items-start gap-3 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-4">
-          <div className="space-y-3">
+        <div className="grid items-start gap-2 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-3">
+          <div className="space-y-2">
             <section className={cardClass}>
               <div className="mb-4">
                 <SectionTitle>Montag bis Donnerstag</SectionTitle>
@@ -345,7 +345,7 @@ export default function App() {
           <ResultCard view={view} />
         </div>
 
-        <footer className="mt-6 flex flex-col gap-2 border-t border-slate-200 pt-4 text-xs sm:text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:text-slate-400">
+        <footer className="mt-4 flex flex-col gap-1.5 border-t border-slate-200 pt-3 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:text-slate-400">
           <p>Alles bleibt in deinem Browser gespeichert – kein Konto, kein Server.</p>
           <button
             type="button"
