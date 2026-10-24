@@ -1,7 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import {
   calculateDeparture,
-  formatDurationLong,
   formatTime,
   MINUTES_PER_DAY,
   parseBreakMinutes,
