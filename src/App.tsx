@@ -272,7 +272,7 @@ export default function App() {
               <div className="mb-4">
                 <SectionTitle>Heute (Freitag)</SectionTitle>
                 <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                  Wann du angefangen hast und wie lange du Pause machst.
+                  Arbeitsbeginn im 24-Stunden-Format, Pause in Minuten.
                 </p>
               </div>
 
@@ -283,13 +283,24 @@ export default function App() {
                   </label>
                   <input
                     id="friday-start"
-                    type="time"
+                    type="text"
+                    inputMode="numeric"
+                    autoComplete="off"
+                    spellCheck={false}
+                    placeholder="08:00"
                     value={week.fridayStart}
                     onChange={(event) =>
                       setWeek((current) => ({ ...current, fridayStart: event.target.value }))
                     }
+                    onBlur={() => {
+                      const minutes = parseTimeOfDay(week.fridayStart)
+                      if (minutes !== null) {
+                        setWeek((current) => ({ ...current, fridayStart: formatTime(minutes) }))
+                      }
+                    }}
                     aria-invalid={fridayStartMinutes === null}
-                    className={`${inputBase} w-32 text-center ${borderClass(fridayStartMinutes !== null)}`}
+                    aria-label="Arbeitsbeginn am Freitag"
+                    className={`${inputBase} w-28 text-right ${borderClass(fridayStartMinutes !== null)}`}
                   />
                 </div>
 

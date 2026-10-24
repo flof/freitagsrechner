@@ -7,7 +7,7 @@ export interface WeekState {
   weeklyTarget: string
   /** Raw input values for Monday through Thursday. */
   days: [string, string, string, string]
-  /** Raw `type="time"` value for today's start, e.g. "08:00". */
+  /** Raw input for today's start in 24-hour form, e.g. "08:00". */
   fridayStart: string
   /** Raw input value for the Friday break, in minutes. */
   fridayBreak: string

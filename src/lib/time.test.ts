@@ -73,6 +73,7 @@ describe('parseBreakMinutes', () => {
 
 describe('parseTimeOfDay', () => {
   it('reads wall-clock times', () => {
+    expect(parseTimeOfDay('00:00')).toBe(0)
     expect(parseTimeOfDay('08:00')).toBe(hours(8))
     expect(parseTimeOfDay('8:05')).toBe(hours(8) + 5)
     expect(parseTimeOfDay('23:59')).toBe(MINUTES_PER_DAY - 1)
