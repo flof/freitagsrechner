@@ -32,17 +32,42 @@ npm run build    # type-checks and writes the static site to dist/
 
 ## Deployment
 
-### Option 1: Docker (no Node.js needed on the VPS)
+### Option 1: Docker build only (no Node.js on the VPS)
+
+Build inside Docker and mount the repo's `dist/` directory out to the host so
+your existing nginx can serve it:
 
 ```bash
 git clone <your-repo-url> /opt/freitagsrechner
 cd /opt/freitagsrechner
-docker build -t freitagsrechner .
-docker run -d --name freitagsrechner --restart unless-stopped -p 8080:80 freitagsrechner
+docker build -t freitagsrechner-build .
+docker run --rm -v "$(pwd)/dist:/app/dist" freitagsrechner-build
 ```
 
-Put nginx in front as a reverse proxy to `http://127.0.0.1:8080` (or use whatever
-port you want). TLS via your existing certbot setup is out of scope.
+`dist/` will appear on the host. Point your existing nginx at it, e.g.:
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name freitag.example.com;
+
+    root /opt/freitagsrechner/dist;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}
+```
+
+`sudo nginx -t && sudo systemctl reload nginx`. After `git pull`, rerun the
+build and docker commands to refresh `dist/`.
 
 ### Option 2: Build on the VPS (Node.js required)
 
@@ -52,6 +77,8 @@ cd /var/www/freitagsrechner
 npm ci
 npm run build
 ```
+
+The build output is plain static files in `dist/`. Point nginx at it as above.
 
 ### Subpath instead of its own domain
 
