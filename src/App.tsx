@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import {
   calculateDeparture,
+  formatDuration,
   formatTime,
   MINUTES_PER_DAY,
   parseBreakMinutes,
@@ -57,12 +58,12 @@ function SectionTitle({ children }: { children: ReactNode }) {
 type ResultView =
   | { kind: 'incomplete'; message: string }
   | {
-      kind: 'ready'
-      targetMinutes: number
-      fridayStartMinutes: number
-      fridayBreakMinutes: number
-      departure: Departure
-    }
+    kind: 'ready'
+    targetMinutes: number
+    fridayStartMinutes: number
+    fridayBreakMinutes: number
+    departure: Departure
+  }
 
 function ResultCard({ view }: { view: ResultView }) {
   if (view.kind === 'incomplete') {
@@ -90,11 +91,11 @@ function ResultCard({ view }: { view: ResultView }) {
           </p>
           <div className="mt-4 space-y-1 text-sm text-slate-700 dark:text-slate-200">
             <p>
-              Gearbeitet von MO-DO: {formatTime(departure.workedMinutes)}
+              Gearbeitet von MO-DO: {formatDuration(departure.workedMinutes)}
             </p>
             <p>
               {departure.overtimeMinutes > 0
-                ? `Überstunden: ${formatTime(departure.overtimeMinutes)}`
+                ? `Überstunden: ${formatDuration(departure.overtimeMinutes)}`
                 : 'Wochenziel erfüllt.'}
             </p>
           </div>
@@ -114,9 +115,9 @@ function ResultCard({ view }: { view: ResultView }) {
           )}
           <div className="mt-4 space-y-1 text-sm text-slate-700 dark:text-slate-200">
             <p>
-              Gearbeitet von MO-DO: {formatTime(departure.workedMinutes)}
+              Gearbeitet von MO-DO: {formatDuration(departure.workedMinutes)}
             </p>
-            <p>Es fehlen noch: {formatTime(departure.remainingMinutes)}</p>
+            <p>Es fehlen noch: {formatDuration(departure.remainingMinutes)}</p>
           </div>
         </>
       )}
@@ -138,19 +139,19 @@ export default function App() {
 
   const ready =
     targetMinutes !== null &&
-    dayMinutes !== null &&
-    fridayStartMinutes !== null &&
-    fridayBreakMinutes !== null
+      dayMinutes !== null &&
+      fridayStartMinutes !== null &&
+      fridayBreakMinutes !== null
       ? { targetMinutes, dayMinutes, fridayStartMinutes, fridayBreakMinutes }
       : null
 
   const departure = ready
     ? calculateDeparture({
-        weeklyTargetMinutes: ready.targetMinutes,
-        daysMinutes: ready.dayMinutes,
-        fridayStartMinutes: ready.fridayStartMinutes,
-        fridayBreakMinutes: ready.fridayBreakMinutes,
-      })
+      weeklyTargetMinutes: ready.targetMinutes,
+      daysMinutes: ready.dayMinutes,
+      fridayStartMinutes: ready.fridayStartMinutes,
+      fridayBreakMinutes: ready.fridayBreakMinutes,
+    })
     : null
 
   const message =
@@ -167,12 +168,12 @@ export default function App() {
   const view: ResultView =
     ready && departure
       ? {
-          kind: 'ready',
-          targetMinutes: ready.targetMinutes,
-          fridayStartMinutes: ready.fridayStartMinutes,
-          fridayBreakMinutes: ready.fridayBreakMinutes,
-          departure,
-        }
+        kind: 'ready',
+        targetMinutes: ready.targetMinutes,
+        fridayStartMinutes: ready.fridayStartMinutes,
+        fridayBreakMinutes: ready.fridayBreakMinutes,
+        departure,
+      }
       : { kind: 'incomplete', message }
 
   function updateDay(index: number, value: string) {
