@@ -30,7 +30,21 @@ npm test         # unit tests for the time math
 npm run build    # type-checks and writes the static site to dist/
 ```
 
-## Deployment (nginx on your VPS)
+## Deployment
+
+### Option 1: Docker (no Node.js needed on the VPS)
+
+```bash
+git clone <your-repo-url> /opt/freitagsrechner
+cd /opt/freitagsrechner
+docker build -t freitagsrechner .
+docker run -d --name freitagsrechner --restart unless-stopped -p 8080:80 freitagsrechner
+```
+
+Put nginx in front as a reverse proxy to `http://127.0.0.1:8080` (or use whatever
+port you want). TLS via your existing certbot setup is out of scope.
+
+### Option 2: Build on the VPS (Node.js required)
 
 ```bash
 git clone <your-repo-url> /var/www/freitagsrechner
@@ -38,44 +52,6 @@ cd /var/www/freitagsrechner
 npm ci
 npm run build
 ```
-
-The build output is plain static files in `dist/`. Point nginx at it:
-
-```nginx
-server {
-    listen 80;
-    listen [::]:80;
-    server_name freitag.example.com;
-
-    root /var/www/freitagsrechner/dist;
-    index index.html;
-
-    # Single-page app: unknown paths still get the app.
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    # Vite fingerprints these filenames.
-    location /assets/ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-}
-```
-
-Then `sudo nginx -t && sudo systemctl reload nginx`. Add TLS with your existing
-certbot setup; nothing in the app depends on HTTPS beyond normal browser rules.
-
-### Rebuilding after an update
-
-```bash
-cd /var/www/freitagsrechner
-git pull
-npm ci
-npm run build
-```
-
-No reload needed: nginx serves the new files from `dist/` immediately.
 
 ### Subpath instead of its own domain
 
