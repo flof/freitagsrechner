@@ -32,42 +32,17 @@ npm run build    # type-checks and writes the static site to dist/
 
 ## Deployment
 
-### Option 1: Docker build only (no Node.js on the VPS)
+### Option 1: One-line Docker build (no Dockerfile needed)
 
-Build inside Docker and mount the repo's `dist/` directory out to the host so
-your existing nginx can serve it:
+Clone the repo on your VPS, mount it in a Node image, and run `npm ci && npm run build`. The `dist/` folder ends up on the host and can be served by your existing nginx:
 
 ```bash
 git clone <your-repo-url> /opt/freitagsrechner
 cd /opt/freitagsrechner
-docker build -t freitagsrechner-build .
-docker run --rm -v "$(pwd)/dist:/app/dist" freitagsrechner-build
+docker run --rm -v "$(pwd):/app" -w /app node:22-slim sh -c "npm ci && npm run build"
 ```
 
-`dist/` will appear on the host. Point your existing nginx at it, e.g.:
-
-```nginx
-server {
-    listen 80;
-    listen [::]:80;
-    server_name freitag.example.com;
-
-    root /opt/freitagsrechner/dist;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    location /assets/ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-}
-```
-
-`sudo nginx -t && sudo systemctl reload nginx`. After `git pull`, rerun the
-build and docker commands to refresh `dist/`.
+Point nginx at `/opt/freitagsrechner/dist` as shown below. To rebuild after `git pull` just rerun that one command.
 
 ### Option 2: Build on the VPS (Node.js required)
 
@@ -78,7 +53,7 @@ npm ci
 npm run build
 ```
 
-The build output is plain static files in `dist/`. Point nginx at it as above.
+The build output is plain static files in `dist/`. Point your existing nginx at it:
 
 ### Subpath instead of its own domain
 
