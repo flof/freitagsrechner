@@ -20,10 +20,10 @@ import {
 const DAY_LABELS = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag'] as const
 
 const cardClass =
-  'rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-sm backdrop-blur sm:p-6 dark:border-slate-800 dark:bg-slate-900/80'
+  'rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur sm:p-5 dark:border-slate-800 dark:bg-slate-900/80'
 
 const inputBase =
-  'h-11 rounded-xl border bg-white px-3 text-lg tabular-nums text-slate-900 shadow-inner outline-none transition focus:ring-2 dark:bg-slate-950 dark:text-slate-50 [color-scheme:light] dark:[color-scheme:dark]'
+  'h-9 rounded-lg border bg-white px-2.5 text-base tabular-nums text-slate-900 shadow-inner outline-none transition focus:ring-2 dark:bg-slate-950 dark:text-slate-50 [color-scheme:light] dark:[color-scheme:dark]'
 
 function borderClass(valid: boolean): string {
   return valid
@@ -215,21 +215,21 @@ export default function App() {
         className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-72 bg-gradient-to-b from-emerald-100/80 to-transparent dark:from-emerald-950/50"
       />
 
-      <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:py-14">
-        <header className="mb-6 lg:mb-10">
+      <div className="mx-auto w-full max-w-4xl px-3 py-6 sm:px-4 lg:py-10">
+        <header className="mb-5 lg:mb-8">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">
             Freitagsrechner
           </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h1 className="mt-1.5 text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
             Wann kannst du ins Wochenende?
           </h1>
-          <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
+          <p className="mt-1 max-w-xl text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Trag deine Zeiten von Montag bis Donnerstag ein und wann du heute angefangen hast.
           </p>
         </header>
 
-        <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-6">
-          <div className="space-y-4">
+        <div className="grid items-start gap-3 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-4">
+          <div className="space-y-3">
             <section className={cardClass}>
               <div className="mb-4">
                 <SectionTitle>Montag bis Donnerstag</SectionTitle>
@@ -364,7 +364,7 @@ export default function App() {
           <ResultCard view={view} />
         </div>
 
-        <footer className="mt-8 flex flex-col gap-3 border-t border-slate-200 pt-5 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:text-slate-400">
+        <footer className="mt-6 flex flex-col gap-2 border-t border-slate-200 pt-4 text-xs sm:text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:text-slate-400">
           <p>Alles bleibt in deinem Browser gespeichert – kein Konto, kein Server.</p>
           <button
             type="button"
