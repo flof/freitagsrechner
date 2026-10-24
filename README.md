@@ -4,6 +4,8 @@ A Friday-only calculator that answers one question: **at what time can I go home
 once my weekly hours are fulfilled?** Frontend only, no backend, no account. All
 state stays in the browser's `localStorage`.
 
+Hosted at: https://freitagsrechner.lingu.at
+
 ## How it works
 
 ```
